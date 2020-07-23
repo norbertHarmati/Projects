@@ -1,9 +1,12 @@
-package org.openjx;
+package org.openjx.Controller;
 
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+import org.openjx.App;
+import org.openjx.View.IncomeView;
 
 public class AppController {
     public Pane pane = App.getPane();
@@ -26,6 +29,28 @@ public class AppController {
                 System.exit(0);
             }
         });
+
+        income.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent e) {
+                new IncomeView();
+            }
+        });
+
+        expense.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent e) {
+                System.exit(0);
+            }
+        });
+
+        help.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent e) {
+                System.exit(0);
+            }
+        });
+
     }
 
 
