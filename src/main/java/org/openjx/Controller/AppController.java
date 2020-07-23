@@ -40,14 +40,14 @@ public class AppController {
         expense.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent e) {
-                System.exit(0);
+
             }
         });
 
         help.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent e) {
-                System.exit(0);
+
             }
         });
 
@@ -117,7 +117,7 @@ public class AppController {
     }
 
 
-    private void resizeLabels(Label label, double x) {
+    public static void resizeLabels(Label label, double x) {
         label.setScaleX(x);
         label.setScaleY(x);
     }

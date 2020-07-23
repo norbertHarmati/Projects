@@ -11,6 +11,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.openjx.Controller.AppController;
+import org.openjx.Controller.IncomeController;
 
 import java.net.URL;
 
@@ -21,30 +22,34 @@ public class App extends Application {
 
     private static Pane pane;
     private static URL url = App.class.getResource("/savings.jpg");
-    Screen screen = Screen.getPrimary();
+    public static Screen screen = Screen.getPrimary();
     private static Stage stage;
     private Label exit;
     private Label income;
     private Label expense;
     private Label help;
     private Label title;
+    static Scene scene;
+
+    public static Scene getScene() {
+        return scene;
+    }
 
     @Override
     public void start(Stage stage) {
 
         App.stage = stage;
-        Scene scene = new Scene(pane, 640, 480);
-        setBackground();
+        scene = new Scene(pane, screen.getBounds().getWidth(), screen.getBounds().getHeight());
+        setBackground(pane);
         stage.setMaximized(true);
         stage.setResizable(false);
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
         new AppController();
-
         stage.show();
     }
 
-    public  void setScene(Scene scene){
+    public static void setScene(Scene scene) {
         stage.setScene(scene);
 
     }
@@ -72,21 +77,20 @@ public class App extends Application {
         pane.getChildren().addAll(exit, income, expense, help, title);
     }
 
-    public void setLayout(Label label, double x, double y) {
+    public static void setLayout(Label label, double x, double y) {
 
         label.setLayoutX(x);
         label.setLayoutY(y);
     }
 
-    public void setBackground() {
+    public static void setBackground(Pane pane) {
         Background image = new Background(new BackgroundImage(new Image(String.valueOf(url), screen.getBounds().getWidth(), screen.getBounds().getHeight(), false, true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT));
-//then you set to your node
         pane.setBackground(image);
     }
 
-    public void setFonts(Label label) {
+    public static void setFonts(Label label) {
         label.setFont(Font.font("Times New Roman", FontWeight.EXTRA_BOLD, 32));
     }
 
