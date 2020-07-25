@@ -53,7 +53,6 @@ public class AppController {
 
     }
 
-
     public void mouseEntered() {
         exit.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override

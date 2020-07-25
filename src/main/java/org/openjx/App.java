@@ -24,12 +24,14 @@ public class App extends Application {
     private static URL url = App.class.getResource("/savings.jpg");
     public static Screen screen = Screen.getPrimary();
     private static Stage stage;
+    private static final int letterSize = 32;
     private Label exit;
     private Label income;
     private Label expense;
     private Label help;
     private Label title;
     static Scene scene;
+
 
     public static Scene getScene() {
         return scene;
@@ -49,38 +51,51 @@ public class App extends Application {
         stage.show();
     }
 
-    public static void setScene(Scene scene) {
-        stage.setScene(scene);
-
-    }
-
     public void init() {
 
         pane = new Pane();
+        creatingLabels();
+        setLayouts();
+        setFonts();
+
+        pane.getChildren().addAll(exit, income, expense, help, title);
+    }
+
+    void creatingLabels() {
         exit = new Label("Exit");
         income = new Label("Income");
         expense = new Label("Expense");
         help = new Label("Help");
         title = new Label("Income-expense calculator");
 
+
+    }
+
+    void setLayouts() {
         setLayout(help, screen.getBounds().getWidth() - 100, screen.getBounds().getHeight() - 100);
         setLayout(income, 50, screen.getBounds().getHeight() - 250);
         setLayout(expense, 50, screen.getBounds().getHeight() - 150);
         setLayout(exit, 50, screen.getBounds().getHeight() - 50);
         setLayout(title, screen.getBounds().getWidth() / 2 - 250, 50);
-        setFonts(title);
-        setFonts(exit);
-        setFonts(income);
-        setFonts(expense);
-        setFonts(help);
 
-        pane.getChildren().addAll(exit, income, expense, help, title);
+    }
+
+    void setFonts() {
+        setFont(title);
+        setFont(exit);
+        setFont(income);
+        setFont(expense);
+        setFont(help);
     }
 
     public static void setLayout(Label label, double x, double y) {
 
         label.setLayoutX(x);
         label.setLayoutY(y);
+    }
+
+    public static void setFont(Label label) {
+        label.setFont(Font.font("Times New Roman", FontWeight.EXTRA_BOLD, letterSize));
     }
 
     public static void setBackground(Pane pane) {
@@ -90,13 +105,13 @@ public class App extends Application {
         pane.setBackground(image);
     }
 
-    public static void setFonts(Label label) {
-        label.setFont(Font.font("Times New Roman", FontWeight.EXTRA_BOLD, 32));
-    }
-
-
     public static Pane getPane() {
         return pane;
+    }
+
+    public static void setScene(Scene scene) {
+        stage.setScene(scene);
+
     }
 
     public static void main(String[] args) {
