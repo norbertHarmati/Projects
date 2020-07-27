@@ -25,16 +25,17 @@ public class IncomeController {
     DatePicker date;
     private static final int max_length = 45;
     String empty = null;
+    IncomeView incomeView;
 
 
-    public IncomeController() {
-
+        this.incomeView = incomeView;
         gettingDataFromIncomeView();
         addTextLimiter(comment, max_length);
         addMouseEvent();
         mouseEntered();
         mouseExited();
         incomeModell = new IncomeModell();
+        incomeModell.read();
     }
 
     void gettingDataFromIncomeView() {
@@ -46,6 +47,7 @@ public class IncomeController {
         date.setEditable(false);
         from_whom_the_income_comes = (TextField) IncomeView.getPane().getChildren().get(4);
         commit = (Label) pane.getChildren().get(5);
+
 
     }
 
@@ -70,38 +72,62 @@ public class IncomeController {
         });
 
         commit.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent e) {
-                if (comment.getText() != (null)) {
-                    incomeModell.setComment(comment.getText());
-                }
 
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (comment.getText() != null) {
+                    incomeModell.setComment(comment.getText());
+                } else {
+                    incomeModell.setComment("");
+                }
                 try {
                     incomeModell.setDate(Date.valueOf(date.getValue()));
 
                     if (from_whom_the_income_comes.getText().equals("") || from_whom_the_income_comes.getText() == null) {
+
                         throw new NullPointerException();
+
                     }
-                    incomeModell.setName(from_whom_the_income_comes.getText());
 
                     try {
-                        incomeModell.setIncome(Integer.parseInt(amount.getText()));
-                        date.setValue(null);
-                        from_whom_the_income_comes.setText(empty);
-                        amount.setText(empty);
-                        comment.setText("");
-                    } catch (NumberFormatException numberFormatException) {
-                        System.out.println("Számot az amounthoz");
+                        if (isValidName(from_whom_the_income_comes.getText())) {
+                            incomeModell.setName(from_whom_the_income_comes.getText());
 
+                        } else {
+                            throw new Exception();
+                        }
+                        try {
+                            incomeModell.setIncome(Long.parseLong(amount.getText()));
+                            comment.setText("");
+                            amount.setText(empty);
+                            from_whom_the_income_comes.setText(empty);
+                            date.setValue(null);
+                            incomeModell.sortInputs();
+                            incomeModell.sort(incomeModell.getData().getDates(), incomeModell.getData().getDates(), incomeModell.getData().getNames(), incomeModell.getData().getIncomes(), incomeModell.getData().getComments());
+                            incomeModell.write();
+
+                        } catch (NumberFormatException e) {
+                            incomeView.showWarningNotification(e);
+                        }
+                    } catch (Exception e) {
+                        incomeView.showWarningNotification(e);
                     }
-
-
-                } catch (NullPointerException exception) {
-
-                    System.out.println("ne hagyd üresen");
+                } catch (NullPointerException e) {
+                    incomeView.showWarningNotification(e);
                 }
             }
         });
+
+    }
+
+    private boolean isValidName(String text) {
+
+        try {
+            long i = Long.parseUnsignedLong(text);
+            return false;
+        } catch (NumberFormatException e) {
+            return true;
+        }
     }
 
     void mouseEntered() {

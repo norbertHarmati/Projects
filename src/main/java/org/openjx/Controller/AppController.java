@@ -4,7 +4,6 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import org.openjx.App;
 import org.openjx.View.IncomeView;
 
